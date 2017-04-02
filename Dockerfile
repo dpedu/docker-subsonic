@@ -6,7 +6,7 @@ EXPOSE 4051
 RUN apt-get update && \
     apt-get install -y wget && \
     apt-get install -y openjdk-7-jre-headless wget supervisor && \
-    wget -O /tmp/subsonic.deb http://subsonic.org/download/subsonic-6.0.deb && \
+    wget -O /tmp/subsonic.deb https://s3-eu-west-1.amazonaws.com/subsonic-public/download/subsonic-6.1.beta2.deb && \
     dpkg -i /tmp/subsonic.deb && \
     useradd subsonic && \
     mkdir /var/subsonic/lucene2 && \
