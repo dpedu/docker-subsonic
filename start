@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -ex
+
+# Run database optimization (if the db already exists)
+if [ -f /var/subsonic/db/subsonic.properties ] ; then
+    cd /var/subsonic/db/
+    sudo -Hu subsonic java -cp :/tools/sqltool-2.0.0.jar:/tools/hsqldb-1.8.0.5.jar org.hsqldb.cmdline.SqlTool --inlineRc=url=jdbc:hsqldb:file:subsonic --driver org.hsqldb.jdbcDriver --sql "SHUTDOWN COMPACT;"
+fi
+
+
+# Start the main service
+cd /usr/share/subsonic
+chown -R subsonic:subsonic /var/subsonic
+sudo -Hu subsonic java -Xmx256m -Dsubsonic.home=/var/subsonic -Dsubsonic.host=0.0.0.0 -Dsubsonic.port=4051 -Dsubsonic.httpsPort=4050 -Dsubsonic.contextPath=/ -Dsubsonic.defaultMusicFolder=/var/music -Dsubsonic.defaultPodcastFolder=/var/music/Podcast -Dsubsonic.defaultPlaylistFolder=/var/playlists -Djava.awt.headless=true -verbose:gc -jar subsonic-booter-jar-with-dependencies.jar
+
