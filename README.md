@@ -10,12 +10,14 @@ docker-subsonic
 
 *Persistence*
 
-To make the subsonic database persistent, a file and a dir must be mounted to the host:
+To make the subsonic database persistent, two paths - a dir and a file - need to be persistent. Additionally, Subsonic generates an index of metadata that should be made persistent as well.
 
 * -v /hostpath/subsonic/db:/var/subsonic/db
 * -v /hostpath/subsonic/subsonic.properties:/var/subsonic/subsonic.properties
+* -v /hostpath/subsonic/db:/var/subsonic/db
+* -v /hostpath/subsonic/metadata:/var/subsonic/lucene2
 
-Both locations must be read/writable by uid 1000.
+All persistent locations must be read/writable by uid/gid 1000.
 
 *TODO*
 
